@@ -19,7 +19,7 @@ resource "aws_subnet" "public_subnet" {
   availability_zone       = "us-east-1b" # Change to a valid AZ
 
   tags = {
-    Name = "PublicSubnet"
+    Name = "nova-PublicSubnet"
   }
 }
 
