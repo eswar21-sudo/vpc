@@ -1,3 +1,8 @@
+module "vpc" {
+  source  = "spacelift.io/kumar/vpc/aws"
+  version = "0.1.0"
+}
+
 provider "aws" {
   region = "us-east-1" # Change this as needed
 }
