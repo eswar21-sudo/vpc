@@ -26,8 +26,8 @@ jobs:
           echo '{
             "name": "infra-dev-stack",
             "repository": {
-              "namespace": "eswarkumar",
-              "name": "iac-terraform-infra"
+              "namespace": "eswar21-sudo",
+              "name": "vpc"
             },
             "branch": "main",
             "administrative": true,
