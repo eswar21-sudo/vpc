@@ -1,0 +1,45 @@
+name: "Create Spacelift Stack"
+
+on:
+ push:
+    branches:
+      - main
+  workflow_dispatch:  # Allows manual trigger in GitHub UI
+
+jobs:
+  create-spacelift-stack:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Create Spacelift Stack via API
+        env:
+          SPACELIFT_API_KEY_ID: ${{ secrets.SPACELIFT_API_KEY_ID }}
+          SPACELIFT_API_KEY_SECRET: ${{ secrets.SPACELIFT_API_KEY_SECRET }}
+        run: |
+          # Encode credentials
+          ENCODED=$(echo -n "${SPACELIFT_API_KEY_ID}:${SPACELIFT_API_KEY_SECRET}" | base64)
+
+          # Build stack definition payload
+          cat <<EOF > payload.json
+          {
+            "name": "infra-dev-stack",
+            "repository": {
+              "namespace": "eswarkumar",
+              "name": "iac-terraform-infra"
+            },
+            "branch": "main",
+            "administrative": true,
+            "terraform_smart_sanitization": true,
+            "project_root": "terraform/",
+            "space": "root"
+          }
+EOF
+
+          # Make API call to Spacelift
+          curl -X POST https://api.app.spacelift.io/stacks \
+            -H "Authorization: Basic $ENCODED" \
+            -H "Content-Type: application/json" \
+            -d @payload.json
