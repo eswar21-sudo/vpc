@@ -37,7 +37,7 @@ jobs:
           }' > payload.json
 
           # Call Spacelift API
-          curl -X POST https://api.app.spacelift.io/stacks \
+          curl -X POST https://eswar21-sudo.app.spacelift.io/stacks \
             -H "Authorization: Basic $ENCODED" \
             -H "Content-Type: application/json" \
             -d @payload.json
