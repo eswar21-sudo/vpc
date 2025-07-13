@@ -1,4 +1,5 @@
 name: "Create Spacelift Stack"
+
 on:
  push:
     branches:
