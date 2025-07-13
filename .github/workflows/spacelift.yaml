@@ -22,23 +22,21 @@ jobs:
           # Encode credentials
           ENCODED=$(echo -n "${SPACELIFT_API_KEY_ID}:${SPACELIFT_API_KEY_SECRET}" | base64)
 
-          # Build stack definition payload
-          cat <<EOF > payload.json
-{
-  "name": "infra-dev-stack",
-  "repository": {
-    "namespace": "eswarkumar",
-    "name": "iac-terraform-infra"
-  },
-  "branch": "main",
-  "administrative": true,
-  "terraform_smart_sanitization": true,
-  "project_root": "terraform/",
-  "space": "root"
-}
-EOF
+          # Write JSON payload to file
+          echo '{
+            "name": "infra-dev-stack",
+            "repository": {
+              "namespace": "eswarkumar",
+              "name": "iac-terraform-infra"
+            },
+            "branch": "main",
+            "administrative": true,
+            "terraform_smart_sanitization": true,
+            "project_root": "terraform/",
+            "space": "root"
+          }' > payload.json
 
-          # Make API call to Spacelift
+          # Call Spacelift API
           curl -X POST https://api.app.spacelift.io/stacks \
             -H "Authorization: Basic $ENCODED" \
             -H "Content-Type: application/json" \
