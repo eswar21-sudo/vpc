@@ -49,7 +49,7 @@ resource "aws_route_table" "public_rt" {
 
 # Associate Route Table with Public Subnet
 resource "aws_route_table_association" "public_assoc" {
-  subnet_id      = aws_subnet.public_subnet.ids
+  subnet_id      = aws_subnet.public_subnet.id
   route_table_id = aws_route_table.public_rt.id
 }
 
@@ -58,6 +58,6 @@ output "vpc_id" {
   value = aws_vpc.main_vpc.id
 }
 
-output "public_subnet_ids" {
-  value = aws_subnet.public_subnet.ids
+output "public_subnet_id" {
+  value = aws_subnet.public_subnet.id
 }
